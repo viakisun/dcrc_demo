@@ -1,5 +1,12 @@
 [
   {
+    "id": "comm-coordinator-workstation",
+    "route": "/samples/comm-coordinator-workstation",
+    "title": "Comm Coordinator Workstation",
+    "summary": "An interactive demonstration of the Comm Coordinator Workstation interface.",
+    "tags": []
+  },
+  {
     "id": "rokaf-data-analyst-workstation",
     "route": "/samples/rokaf-data-analyst-workstation",
     "title": "ROKAF Data Analyst Workstation",
