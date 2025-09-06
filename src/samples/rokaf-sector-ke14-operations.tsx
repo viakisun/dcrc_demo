@@ -340,8 +340,65 @@ const ROKAFSectorKE14Detail = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-900 text-green-300 font-mono">
-      {/* ... rest of component ... */}
+    <div className="min-h-screen bg-gray-900 text-green-300 font-mono flex flex-col">
+      {/* Header */}
+      <header className="bg-gray-800/80 border-b border-green-800/50 p-3 flex justify-between items-center text-sm backdrop-blur-sm">
+        <div className="flex items-center space-x-4">
+          <h1 className="font-bold text-xl text-cyan-400">SECTOR KE-14 OPERATIONS</h1>
+          <div className="text-xs">TIME: {currentTime.toLocaleTimeString('en-US', { hour12: false })}Z</div>
+        </div>
+        <div className={`border-2 p-2 rounded-lg ${
+          alertStatus === 'GREEN' ? 'border-green-500' :
+          alertStatus === 'YELLOW' ? 'border-yellow-500' : 'border-red-500'
+        }`}>
+          <div className="flex items-center space-x-2">
+            <AlertTriangle className={`w-6 h-6 ${
+              alertStatus === 'GREEN' ? 'text-green-500' :
+              alertStatus === 'YELLOW' ? 'text-yellow-500' : 'text-red-500'
+            }`} />
+            <span className="font-bold text-lg">ALERT STATUS: {alertStatus}</span>
+          </div>
+        </div>
+        <div className="flex items-center space-x-3">
+          <Settings className="w-5 h-5 cursor-pointer hover:text-cyan-300" />
+          <Users className="w-5 h-5 cursor-pointer hover:text-cyan-300" />
+          <BarChart3 className="w-5 h-5 cursor-pointer hover:text-cyan-300" />
+        </div>
+      </header>
+
+      {/* Main Content Area */}
+      <div className="flex flex-1 overflow-hidden">
+        {/* Operator Stations */}
+        <aside className="w-1/3 bg-gray-800/50 border-r border-green-800/50 p-3 overflow-y-auto">
+          <h2 className="text-lg font-bold text-center text-cyan-400 mb-3">OPERATOR STATIONS</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            {operatorStations.map(renderOperatorStation)}
+          </div>
+        </aside>
+
+        {/* Tactical Map */}
+        <main className="w-2/3 bg-black/50 relative" style={{
+          background: 'radial-gradient(circle, #001a00 1px, transparent 1px), repeating-linear-gradient(0deg, transparent, transparent 24px, #002a00 25px), repeating-linear-gradient(90deg, transparent, transparent 24px, #002a00 25px)',
+          backgroundSize: '25px 25px, 100% 25px, 25px 100%',
+        }}>
+          {sectorTracks.map(renderTrack)}
+        </main>
+      </div>
+
+      {/* Footer / Comms Log */}
+      <footer className="h-40 bg-gray-800/80 border-t border-green-800/50 p-3 flex flex-col backdrop-blur-sm">
+        <h2 className="text-lg font-bold text-cyan-400 mb-2 flex items-center"><MessageSquare className="w-5 h-5 mr-2" />COMMS LOG</h2>
+        <div className="flex-1 overflow-y-auto text-xs space-y-1">
+          {commLog.map((log, index) => (
+            <div key={index} className="flex space-x-2 items-start">
+              <span className="text-gray-500">{log.time.toLocaleTimeString('en-US', { hour12: false })}</span>
+              <span className={`font-bold w-24 ${log.priority === 'URGENT' ? 'text-red-500' : log.priority === 'PRIORITY' ? 'text-yellow-500' : 'text-green-500'}`}>{log.from} &gt; {log.to}</span>
+              <p className="flex-1 text-gray-300">{log.message}</p>
+              <span className="text-purple-400 text-[10px]">({log.channel})</span>
+            </div>
+          ))}
+        </div>
+      </footer>
     </div>
   );
 };
