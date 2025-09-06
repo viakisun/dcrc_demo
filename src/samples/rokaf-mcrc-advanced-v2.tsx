@@ -36,6 +36,7 @@ const ROKAFMCRCAdvanced = () => {
   const [currentTime, setCurrentTime] = useState(new Date());
   const [selectedGrid, setSelectedGrid] = useState('KE-12');
   const [selectedTrack, setSelectedTrack] = useState<Track | null>(null);
+  const [selectedThreat, setSelectedThreat] = useState<GroundThreat | null>(null);
   const [threatLevel] = useState('FPCON-BRAVO');
   const [radarMode, setRadarMode] = useState('WIDE_AREA');
   const [showTrails, setShowTrails] = useState(true);
@@ -124,7 +125,7 @@ const ROKAFMCRCAdvanced = () => {
             left: `${track.position.x}px`, 
             top: `${track.position.y}px`
           }}
-          onClick={() => setSelectedTrack(track)}
+          onClick={() => { setSelectedTrack(track); setSelectedThreat(null); }}
         >
           <div className="flex items-center space-x-1">
             <div className={`w-3 h-3 ${
@@ -240,6 +241,7 @@ const ROKAFMCRCAdvanced = () => {
             left: `${threat.position.x}px`, 
             top: `${threat.position.y}px`
           }}
+          onClick={() => { setSelectedThreat(threat); setSelectedTrack(null); }}
         >
           <div className="bg-red-900/60 border border-red-400 rounded p-1">
             <Skull className="w-3 h-3 text-red-400" />
@@ -303,22 +305,39 @@ const ROKAFMCRCAdvanced = () => {
             ))}
           </div>
 
-          {/* Selected Track Info */}
+          {/* Selected Item Info */}
           <div className="p-2 border-t border-green-900/50">
-            <h2 className="text-center font-bold text-cyan-400">TRACK DETAILS</h2>
+            <h2 className="text-center font-bold text-cyan-400">ITEM DETAILS</h2>
           </div>
           <div className="p-3 text-xs space-y-1 h-48 overflow-y-auto">
-            {selectedTrack ? (
+            {selectedTrack && (
               <>
-                <div><span className="font-bold text-gray-400">ID:</span> {selectedTrack.id}</div>
-                <div><span className="font-bold text-gray-400">TYPE:</span> {selectedTrack.type}</div>
-                <div><span className="font-bold text-gray-400">ALT:</span> {selectedTrack.altitude} ft</div>
-                <div><span className="font-bold text-gray-400">SPD:</span> {selectedTrack.speed} kts</div>
-                <div><span className="font-bold text-gray-400">STATUS:</span> <span className={`font-bold text-${selectedTrack.status === 'FRIENDLY' ? 'green' : selectedTrack.status === 'UNKNOWN' ? 'yellow' : 'red'}-400`}>{selectedTrack.status}</span></div>
-                <div><span className="font-bold text-gray-400">PILOT:</span> {selectedTrack.pilot}</div>
+                <h3 className="font-bold text-base text-cyan-300">{selectedTrack.callsign}</h3>
+                <div><span className="font-bold text-gray-400 w-16 inline-block">ID:</span> {selectedTrack.id}</div>
+                <div><span className="font-bold text-gray-400 w-16 inline-block">STATUS:</span> <span className={`font-bold text-${selectedTrack.status === 'FRIENDLY' ? 'green' : selectedTrack.status === 'UNKNOWN' ? 'yellow' : 'red'}-400`}>{selectedTrack.status}</span></div>
+                <div><span className="font-bold text-gray-400 w-16 inline-block">TYPE:</span> {selectedTrack.type}</div>
+                <div><span className="font-bold text-gray-400 w-16 inline-block">ALT:</span> {selectedTrack.altitude} ft</div>
+                <div><span className="font-bold text-gray-400 w-16 inline-block">SPD:</span> {selectedTrack.speed} kts</div>
+                <div><span className="font-bold text-gray-400 w-16 inline-block">MISSION:</span> {selectedTrack.mission}</div>
+                <div><span className="font-bold text-gray-400 w-16 inline-block">CONTROLLER:</span> {selectedTrack.controller}</div>
+                <div><span className="font-bold text-gray-400 w-16 inline-block">FUEL:</span> {selectedTrack.fuel}{typeof selectedTrack.fuel === 'number' && '%'}</div>
+                <div><span className="font-bold text-gray-400 w-16 inline-block">WEAPONS:</span> {selectedTrack.weapons}</div>
+                <div><span className="font-bold text-gray-400 w-16 inline-block">PILOT:</span> {selectedTrack.pilot}</div>
+                <div><span className="font-bold text-gray-400 w-16 inline-block">ETA:</span> {selectedTrack.eta}</div>
               </>
-            ) : (
-              <div className="text-center text-gray-500 pt-8">No Track Selected</div>
+            )}
+            {selectedThreat && (
+              <>
+                <h3 className="font-bold text-base text-red-400">{selectedThreat.type}</h3>
+                <div><span className="font-bold text-gray-400 w-16 inline-block">ID:</span> {selectedThreat.id}</div>
+                <div><span className="font-bold text-gray-400 w-16 inline-block">STATUS:</span> <span className="font-bold text-yellow-400">{selectedThreat.status}</span></div>
+                <div><span className="font-bold text-gray-400 w-16 inline-block">THREAT:</span> <span className={`font-bold text-${selectedThreat.threat === 'HIGH' ? 'red' : selectedThreat.threat === 'MEDIUM' ? 'orange' : 'yellow'}-400`}>{selectedThreat.threat}</span></div>
+                <div><span className="font-bold text-gray-400 w-16 inline-block">RANGE:</span> {selectedThreat.range} km</div>
+                <div><span className="font-bold text-gray-400 w-16 inline-block">POSITION:</span> {selectedThreat.position.x}, {selectedThreat.position.y}</div>
+              </>
+            )}
+            {!selectedTrack && !selectedThreat && (
+              <div className="text-center text-gray-500 pt-8">No Item Selected</div>
             )}
           </div>
         </aside>

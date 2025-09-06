@@ -368,21 +368,50 @@ const ROKAFSectorKE14Detail = () => {
 
       {/* Main Content Area */}
       <div className="flex flex-1 overflow-hidden">
-        {/* Operator Stations */}
-        <aside className="w-1/3 bg-gray-800/50 border-r border-green-800/50 p-3 overflow-y-auto">
+        {/* Left Sidebar: Operator Stations */}
+        <aside className="w-1/4 bg-gray-800/50 border-r border-green-800/50 p-3 overflow-y-auto">
           <h2 className="text-lg font-bold text-center text-cyan-400 mb-3">OPERATOR STATIONS</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 gap-3">
             {operatorStations.map(renderOperatorStation)}
           </div>
         </aside>
 
-        {/* Tactical Map */}
-        <main className="w-2/3 bg-black/50 relative" style={{
+        {/* Center: Tactical Map */}
+        <main className="flex-1 bg-black/50 relative" style={{
           background: 'radial-gradient(circle, #001a00 1px, transparent 1px), repeating-linear-gradient(0deg, transparent, transparent 24px, #002a00 25px), repeating-linear-gradient(90deg, transparent, transparent 24px, #002a00 25px)',
           backgroundSize: '25px 25px, 100% 25px, 25px 100%',
         }}>
           {sectorTracks.map(renderTrack)}
         </main>
+
+        {/* Right Sidebar: Track Details */}
+        <aside className="w-1/4 bg-gray-800/50 border-l border-green-800/50 p-3 overflow-y-auto">
+            <h2 className="text-lg font-bold text-center text-cyan-400 mb-3">TRACK DETAILS</h2>
+            {selectedTrack ? (
+              <div className="text-xs space-y-2">
+                <h3 className={`font-bold text-base text-center mb-2 text-${selectedTrack.status === 'FRIENDLY' ? 'green' : selectedTrack.status === 'UNKNOWN' ? 'yellow' : 'red'}-400`}>
+                  {selectedTrack.callsign}
+                </h3>
+                <div className="grid grid-cols-2 gap-x-2 gap-y-1">
+                  <span className="font-bold text-gray-400">ID:</span><span>{selectedTrack.id}</span>
+                  <span className="font-bold text-gray-400">STATUS:</span><span>{selectedTrack.status}</span>
+                  <span className="font-bold text-gray-400">TYPE:</span><span>{selectedTrack.type}</span>
+                  <span className="font-bold text-gray-400">MISSION:</span><span>{selectedTrack.mission}</span>
+                  <span className="font-bold text-gray-400">ALT:</span><span>{selectedTrack.altitude} ft</span>
+                  <span className="font-bold text-gray-400">SPD:</span><span>{selectedTrack.speed} kts</span>
+                  <span className="font-bold text-gray-400">HDG:</span><span>{selectedTrack.heading}</span>
+                  <span className="font-bold text-gray-400">FUEL:</span><span>{selectedTrack.fuel}{typeof selectedTrack.fuel === 'number' && '%'}</span>
+                  <span className="font-bold text-gray-400">SQUAWK:</span><span className="text-purple-400">{selectedTrack.squawk}</span>
+                  <span className="font-bold text-gray-400">COMM:</span><span>{selectedTrack.commsFreq}</span>
+                  <span className="font-bold text-gray-400">PILOT:</span><span>{selectedTrack.pilot}</span>
+                  <span className="font-bold text-gray-400">CTRLR:</span><span>{selectedTrack.controller}</span>
+                  <span className="font-bold text-gray-400">LAST PING:</span><span>{selectedTrack.lastContact}</span>
+                </div>
+              </div>
+            ) : (
+              <div className="text-center text-gray-500 pt-10">No Track Selected</div>
+            )}
+        </aside>
       </div>
 
       {/* Footer / Comms Log */}
