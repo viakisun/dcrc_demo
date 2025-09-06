@@ -42,11 +42,25 @@ interface SectorTrack {
   lastContact: string;
 }
 
+import { Filter, Zap } from 'lucide-react';
+
 const ROKAFSectorKE14Detail = () => {
   const [currentTime, setCurrentTime] = useState(new Date());
   const [selectedOperator, setSelectedOperator] = useState('OPS-01');
   const [alertStatus, setAlertStatus] = useState('GREEN');
   const [selectedTrack, setSelectedTrack] = useState<SectorTrack | null>(null);
+  const [filters, setFilters] = useState({
+    friendly: true,
+    unknown: true,
+    hostile: false, // No hostile tracks in this sample
+    air: true,
+    helo: true,
+  });
+
+  const handleFilterChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, checked } = event.target;
+    setFilters(prev => ({ ...prev, [name]: checked }));
+  };
 
   const operatorStations: Operator[] = [
     {
@@ -212,6 +226,16 @@ const ROKAFSectorKE14Detail = () => {
     { time: new Date(Date.now() - 120000), from: 'RESCUE-07', to: 'OPS-03', message: 'Medical emergency, requesting priority handling', priority: 'URGENT', channel: 'SAR-COORD' }
   ]);
 
+  const filteredTracks = sectorTracks.filter(track => {
+    if (track.status === 'FRIENDLY' && !filters.friendly) return false;
+    if (track.status === 'UNKNOWN' && !filters.unknown) return false;
+    if (track.status === 'HOSTILE' && !filters.hostile) return false;
+    const type = track.type.toLowerCase();
+    if ((type.includes('f-16') || type.includes('c-130')) && !filters.air) return false;
+    if ((type.includes('uh-60') || type.includes('surion')) && !filters.helo) return false;
+    return true;
+  });
+
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentTime(new Date());
@@ -369,10 +393,43 @@ const ROKAFSectorKE14Detail = () => {
       {/* Main Content Area */}
       <div className="flex flex-1 overflow-hidden">
         {/* Left Sidebar: Operator Stations */}
-        <aside className="w-1/4 bg-gray-800/50 border-r border-green-800/50 p-3 overflow-y-auto">
-          <h2 className="text-lg font-bold text-center text-cyan-400 mb-3">OPERATOR STATIONS</h2>
-          <div className="grid grid-cols-1 gap-3">
-            {operatorStations.map(renderOperatorStation)}
+        <aside className="w-1/4 bg-gray-800/50 border-r border-green-800/50 p-3 flex flex-col space-y-4">
+          <div>
+            <h2 className="text-lg font-bold text-center text-cyan-400 mb-3">OPERATOR STATIONS</h2>
+            <div className="grid grid-cols-1 gap-3 max-h-96 overflow-y-auto">
+              {operatorStations.map(renderOperatorStation)}
+            </div>
+          </div>
+          <div className="flex-grow space-y-4">
+            <div className="bg-gray-900/50 rounded p-2">
+                <h3 className="text-cyan-400 font-bold text-sm mb-2 flex items-center"><Filter className="w-4 h-4 mr-2" />Filters</h3>
+                <div className="space-y-1 text-xs">
+                    <label className="flex items-center space-x-2 cursor-pointer">
+                        <input type="checkbox" name="friendly" checked={filters.friendly} onChange={handleFilterChange} className="form-checkbox bg-gray-700 border-gray-600 text-green-500" />
+                        <span>Friendly</span>
+                    </label>
+                    <label className="flex items-center space-x-2 cursor-pointer">
+                        <input type="checkbox" name="unknown" checked={filters.unknown} onChange={handleFilterChange} className="form-checkbox bg-gray-700 border-gray-600 text-yellow-500" />
+                        <span>Unknown</span>
+                    </label>
+                    <label className="flex items-center space-x-2 cursor-pointer">
+                        <input type="checkbox" name="air" checked={filters.air} onChange={handleFilterChange} className="form-checkbox bg-gray-700 border-gray-600 text-blue-500" />
+                        <span>Fixed-Wing</span>
+                    </label>
+                     <label className="flex items-center space-x-2 cursor-pointer">
+                        <input type="checkbox" name="helo" checked={filters.helo} onChange={handleFilterChange} className="form-checkbox bg-gray-700 border-gray-600 text-purple-500" />
+                        <span>Helicopters</span>
+                    </label>
+                </div>
+            </div>
+            <div className="bg-gray-900/50 rounded p-2">
+                <h3 className="text-cyan-400 font-bold text-sm mb-2 flex items-center"><Zap className="w-4 h-4 mr-2" />Actions</h3>
+                <div className="space-y-2">
+                    <button disabled={!selectedTrack} className="w-full text-xs bg-blue-800 hover:bg-blue-700 text-white py-1 px-2 rounded disabled:bg-gray-600 disabled:cursor-not-allowed">VECTOR</button>
+                    <button disabled={!selectedTrack} className="w-full text-xs bg-yellow-800 hover:bg-yellow-700 text-white py-1 px-2 rounded disabled:bg-gray-600 disabled:cursor-not-allowed">HANDOVER</button>
+                    <button disabled={!selectedTrack || selectedTrack.status !== 'UNKNOWN'} className="w-full text-xs bg-red-800 hover:bg-red-700 text-white py-1 px-2 rounded disabled:bg-gray-600 disabled:cursor-not-allowed">WARN</button>
+                </div>
+            </div>
           </div>
         </aside>
 
@@ -381,31 +438,44 @@ const ROKAFSectorKE14Detail = () => {
           background: 'radial-gradient(circle, #001a00 1px, transparent 1px), repeating-linear-gradient(0deg, transparent, transparent 24px, #002a00 25px), repeating-linear-gradient(90deg, transparent, transparent 24px, #002a00 25px)',
           backgroundSize: '25px 25px, 100% 25px, 25px 100%',
         }}>
-          {sectorTracks.map(renderTrack)}
+          {filteredTracks.map(renderTrack)}
         </main>
 
         {/* Right Sidebar: Track Details */}
         <aside className="w-1/4 bg-gray-800/50 border-l border-green-800/50 p-3 overflow-y-auto">
             <h2 className="text-lg font-bold text-center text-cyan-400 mb-3">TRACK DETAILS</h2>
             {selectedTrack ? (
-              <div className="text-xs space-y-2">
+              <div className="text-xs space-y-3">
                 <h3 className={`font-bold text-base text-center mb-2 text-${selectedTrack.status === 'FRIENDLY' ? 'green' : selectedTrack.status === 'UNKNOWN' ? 'yellow' : 'red'}-400`}>
-                  {selectedTrack.callsign}
+                  {selectedTrack.callsign} [{selectedTrack.id}]
                 </h3>
-                <div className="grid grid-cols-2 gap-x-2 gap-y-1">
-                  <span className="font-bold text-gray-400">ID:</span><span>{selectedTrack.id}</span>
-                  <span className="font-bold text-gray-400">STATUS:</span><span>{selectedTrack.status}</span>
-                  <span className="font-bold text-gray-400">TYPE:</span><span>{selectedTrack.type}</span>
-                  <span className="font-bold text-gray-400">MISSION:</span><span>{selectedTrack.mission}</span>
-                  <span className="font-bold text-gray-400">ALT:</span><span>{selectedTrack.altitude} ft</span>
-                  <span className="font-bold text-gray-400">SPD:</span><span>{selectedTrack.speed} kts</span>
-                  <span className="font-bold text-gray-400">HDG:</span><span>{selectedTrack.heading}</span>
-                  <span className="font-bold text-gray-400">FUEL:</span><span>{selectedTrack.fuel}{typeof selectedTrack.fuel === 'number' && '%'}</span>
-                  <span className="font-bold text-gray-400">SQUAWK:</span><span className="text-purple-400">{selectedTrack.squawk}</span>
-                  <span className="font-bold text-gray-400">COMM:</span><span>{selectedTrack.commsFreq}</span>
-                  <span className="font-bold text-gray-400">PILOT:</span><span>{selectedTrack.pilot}</span>
-                  <span className="font-bold text-gray-400">CTRLR:</span><span>{selectedTrack.controller}</span>
-                  <span className="font-bold text-gray-400">LAST PING:</span><span>{selectedTrack.lastContact}</span>
+                <div className="space-y-2">
+                    <div className="p-2 bg-gray-900/50 rounded">
+                        <div className="font-bold text-yellow-400 mb-1">Mission & Status</div>
+                        <div className="grid grid-cols-2 gap-x-2 gap-y-1">
+                            <span>Status:</span> <span className={`font-bold text-${selectedTrack.status === 'FRIENDLY' ? 'green' : selectedTrack.status === 'UNKNOWN' ? 'yellow' : 'red'}-400`}>{selectedTrack.status}</span>
+                            <span>Mission:</span> <span>{selectedTrack.mission}</span>
+                            <span>Controller:</span> <span>{selectedTrack.controller}</span>
+                            <span>Pilot:</span> <span>{selectedTrack.pilot}</span>
+                        </div>
+                    </div>
+                     <div className="p-2 bg-gray-900/50 rounded">
+                        <div className="font-bold text-yellow-400 mb-1">Flight Data</div>
+                        <div className="grid grid-cols-2 gap-x-2 gap-y-1">
+                            <span>Altitude:</span> <span>{selectedTrack.altitude} ft</span>
+                            <span>Speed:</span> <span>{selectedTrack.speed} kts</span>
+                            <span>Heading:</span> <span>{selectedTrack.heading}°</span>
+                            <span>Fuel:</span> <span>{selectedTrack.fuel}{typeof selectedTrack.fuel === 'number' && '%'}</span>
+                        </div>
+                    </div>
+                    <div className="p-2 bg-gray-900/50 rounded">
+                        <div className="font-bold text-yellow-400 mb-1">System & Comms</div>
+                         <div className="grid grid-cols-2 gap-x-2 gap-y-1">
+                            <span>Squawk:</span><span className="text-purple-400">{selectedTrack.squawk}</span>
+                            <span>Comm Freq:</span><span>{selectedTrack.commsFreq}</span>
+                            <span>Last Ping:</span><span>{selectedTrack.lastContact}</span>
+                        </div>
+                    </div>
                 </div>
               </div>
             ) : (
