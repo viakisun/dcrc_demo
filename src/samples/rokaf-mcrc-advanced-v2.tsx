@@ -253,8 +253,84 @@ const ROKAFMCRCAdvanced = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-900 text-green-300 font-mono">
-      {/* ... rest of the component ... */}
+    <div className="min-h-screen bg-black text-green-300 font-mono flex flex-col">
+      {/* Header */}
+      <header className="bg-gray-900/50 border-b border-green-900/50 p-2 flex justify-between items-center text-xs backdrop-blur-sm">
+        <div className="flex items-center space-x-4">
+          <h1 className="font-bold text-lg text-cyan-400">ROKAF MCRC V2</h1>
+          <div>TIME: {currentTime.toISOString().substr(11, 8)}Z</div>
+        </div>
+        <div className="flex items-center space-x-4">
+          <div>FPCON: <span className="text-yellow-400 font-bold">{threatLevel}</span></div>
+          <div>ALERT: <span className="text-red-500 font-bold">{alertLevel}</span></div>
+        </div>
+        <div className="flex items-center space-x-2">
+          <Settings className="w-4 h-4" />
+          <Radio className="w-4 h-4" />
+          <CloudRain className="w-4 h-4" />
+        </div>
+      </header>
+
+      {/* Main Content */}
+      <div className="flex flex-1 overflow-hidden">
+        {/* Main Map Area */}
+        <main className="flex-1 bg-gray-800/80 relative overflow-hidden" style={{
+            background: 'radial-gradient(circle, #001a00 1px, transparent 1px), repeating-linear-gradient(0deg, transparent, transparent 19px, #002a00 20px), repeating-linear-gradient(90deg, transparent, transparent 19px, #002a00 20px)',
+            backgroundSize: '20px 20px, 100% 20px, 20px 100%',
+        }}>
+            {activeTracks.map(renderTrack)}
+            {groundThreats.map(renderGroundThreat)}
+        </main>
+
+        {/* Right Sidebar */}
+        <aside className="w-80 bg-gray-900/70 border-l border-green-900/50 flex flex-col backdrop-blur-sm">
+          {/* Grid Sectors */}
+          <div className="p-2 border-b border-green-900/50">
+            <h2 className="text-center font-bold text-cyan-400">GRID SECTORS</h2>
+          </div>
+          <div className="flex-1 overflow-y-auto text-xs">
+            {gridSectors.map(sector => (
+              <div key={sector.id} className={`p-2 border-b border-gray-800/50 flex justify-between items-center cursor-pointer hover:bg-green-900/30 ${selectedGrid === sector.id ? 'bg-green-800/50' : ''}`} onClick={() => setSelectedGrid(sector.id)}>
+                <div>
+                  <span className="font-bold text-cyan-300">{sector.id}</span>
+                  <div className="text-[10px] text-gray-400">{sector.controller}</div>
+                </div>
+                <div className="text-right">
+                  <div className={`font-bold text-${sector.color}-400`}>{sector.threat}</div>
+                  <div className="text-[10px]">{sector.tracks} Tracks</div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Selected Track Info */}
+          <div className="p-2 border-t border-green-900/50">
+            <h2 className="text-center font-bold text-cyan-400">TRACK DETAILS</h2>
+          </div>
+          <div className="p-3 text-xs space-y-1 h-48 overflow-y-auto">
+            {selectedTrack ? (
+              <>
+                <div><span className="font-bold text-gray-400">ID:</span> {selectedTrack.id}</div>
+                <div><span className="font-bold text-gray-400">TYPE:</span> {selectedTrack.type}</div>
+                <div><span className="font-bold text-gray-400">ALT:</span> {selectedTrack.altitude} ft</div>
+                <div><span className="font-bold text-gray-400">SPD:</span> {selectedTrack.speed} kts</div>
+                <div><span className="font-bold text-gray-400">STATUS:</span> <span className={`font-bold text-${selectedTrack.status === 'FRIENDLY' ? 'green' : selectedTrack.status === 'UNKNOWN' ? 'yellow' : 'red'}-400`}>{selectedTrack.status}</span></div>
+                <div><span className="font-bold text-gray-400">PILOT:</span> {selectedTrack.pilot}</div>
+              </>
+            ) : (
+              <div className="text-center text-gray-500 pt-8">No Track Selected</div>
+            )}
+          </div>
+        </aside>
+      </div>
+
+      {/* Footer */}
+      <footer className="bg-gray-900/50 border-t border-green-900/50 p-2 flex justify-center items-center space-x-4 text-xs backdrop-blur-sm">
+        <button onClick={() => setRadarMode(radarMode === 'WIDE_AREA' ? 'SECTOR_SCAN' : 'WIDE_AREA')} className="px-2 py-1 bg-gray-800 hover:bg-gray-700 border border-green-800 rounded">RADAR: {radarMode}</button>
+        <button onClick={() => setShowTrails(!showTrails)} className={`px-2 py-1 bg-gray-800 hover:bg-gray-700 border border-green-800 rounded ${showTrails ? 'text-cyan-400' : ''}`}>TRAILS</button>
+        <button onClick={() => setAlertLevel('HIGH')} className="px-2 py-1 bg-yellow-800/50 hover:bg-yellow-700/50 border border-yellow-800 rounded text-yellow-300">ALERT</button>
+        <button onClick={() => setAlertLevel('CRITICAL')} className="px-2 py-1 bg-red-800/50 hover:bg-red-700/50 border border-red-800 rounded text-red-300">SCRAMBLE</button>
+      </footer>
     </div>
   );
 };
