@@ -41,6 +41,17 @@ const ROKAFMCRCAdvanced = () => {
   const [radarMode, setRadarMode] = useState('WIDE_AREA');
   const [showTrails, setShowTrails] = useState(true);
   const [alertLevel, setAlertLevel] = useState('NORMAL');
+  const [filters, setFilters] = useState({
+    friendly: true,
+    unknown: true,
+    hostile: true,
+    ground: true,
+  });
+
+  const handleFilterChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, checked } = event.target;
+    setFilters(prev => ({ ...prev, [name]: checked }));
+  };
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -100,6 +111,15 @@ const ROKAFMCRCAdvanced = () => {
     { id: 'RAD001', type: 'BIG BIRD RADAR', position: { x: 180, y: 160 }, range: 500, status: 'SCANNING', threat: 'LOW' },
     { id: 'AAA001', type: 'ZSU-23-4', position: { x: 260, y: 220 }, range: 25, status: 'STANDBY', threat: 'LOW' }
   ];
+
+  const filteredTracks = activeTracks.filter(track => {
+    if (track.status === 'FRIENDLY' && !filters.friendly) return false;
+    if (track.status === 'UNKNOWN' && !filters.unknown) return false;
+    if (track.status === 'HOSTILE' && !filters.hostile) return false;
+    return true;
+  });
+
+  const filteredThreats = filters.ground ? groundThreats : [];
 
   const renderTrack = (track: Track) => {
     const colors: Record<TrackStatus, string> = {
@@ -275,13 +295,46 @@ const ROKAFMCRCAdvanced = () => {
 
       {/* Main Content */}
       <div className="flex flex-1 overflow-hidden">
+        {/* Left Sidebar */}
+        <aside className="w-64 bg-gray-900/70 border-r border-green-900/50 flex flex-col backdrop-blur-sm p-2 space-y-2">
+            <div className="bg-gray-800/50 rounded p-2">
+                <h3 className="text-cyan-400 font-bold text-sm mb-2">Filters</h3>
+                <div className="space-y-1 text-xs">
+                    <label className="flex items-center space-x-2 cursor-pointer">
+                        <input type="checkbox" name="friendly" checked={filters.friendly} onChange={handleFilterChange} className="form-checkbox bg-gray-700 border-gray-600 text-green-500" />
+                        <span>Friendly</span>
+                    </label>
+                    <label className="flex items-center space-x-2 cursor-pointer">
+                        <input type="checkbox" name="unknown" checked={filters.unknown} onChange={handleFilterChange} className="form-checkbox bg-gray-700 border-gray-600 text-yellow-500" />
+                        <span>Unknown</span>
+                    </label>
+                    <label className="flex items-center space-x-2 cursor-pointer">
+                        <input type="checkbox" name="hostile" checked={filters.hostile} onChange={handleFilterChange} className="form-checkbox bg-gray-700 border-gray-600 text-red-500" />
+                        <span>Hostile</span>
+                    </label>
+                    <label className="flex items-center space-x-2 cursor-pointer">
+                        <input type="checkbox" name="ground" checked={filters.ground} onChange={handleFilterChange} className="form-checkbox bg-gray-700 border-gray-600 text-orange-500" />
+                        <span>Ground Threats</span>
+                    </label>
+                </div>
+            </div>
+            <div className="bg-gray-800/50 rounded p-2">
+                <h3 className="text-cyan-400 font-bold text-sm mb-2">Actions</h3>
+                <div className="space-y-2">
+                    <button className="w-full text-xs bg-blue-800 hover:bg-blue-700 text-white py-1 px-2 rounded">REQUEST IFF</button>
+                    <button className="w-full text-xs bg-yellow-800 hover:bg-yellow-700 text-white py-1 px-2 rounded">CORRELATE</button>
+                    <button className="w-full text-xs bg-red-800 hover:bg-red-700 text-white py-1 px-2 rounded">INTERCEPT</button>
+                </div>
+            </div>
+        </aside>
+
         {/* Main Map Area */}
         <main className="flex-1 bg-gray-800/80 relative overflow-hidden" style={{
             background: 'radial-gradient(circle, #001a00 1px, transparent 1px), repeating-linear-gradient(0deg, transparent, transparent 19px, #002a00 20px), repeating-linear-gradient(90deg, transparent, transparent 19px, #002a00 20px)',
             backgroundSize: '20px 20px, 100% 20px, 20px 100%',
         }}>
-            {activeTracks.map(renderTrack)}
-            {groundThreats.map(renderGroundThreat)}
+            {filteredTracks.map(renderTrack)}
+            {filteredThreats.map(renderGroundThreat)}
         </main>
 
         {/* Right Sidebar */}
@@ -290,7 +343,7 @@ const ROKAFMCRCAdvanced = () => {
           <div className="p-2 border-b border-green-900/50">
             <h2 className="text-center font-bold text-cyan-400">GRID SECTORS</h2>
           </div>
-          <div className="flex-1 overflow-y-auto text-xs">
+          <div className="overflow-y-auto text-xs" style={{ flex: '2 1 0%'}}>
             {gridSectors.map(sector => (
               <div key={sector.id} className={`p-2 border-b border-gray-800/50 flex justify-between items-center cursor-pointer hover:bg-green-900/30 ${selectedGrid === sector.id ? 'bg-green-800/50' : ''}`} onClick={() => setSelectedGrid(sector.id)}>
                 <div>
@@ -309,32 +362,52 @@ const ROKAFMCRCAdvanced = () => {
           <div className="p-2 border-t border-green-900/50">
             <h2 className="text-center font-bold text-cyan-400">ITEM DETAILS</h2>
           </div>
-          <div className="p-3 text-xs space-y-1 h-48 overflow-y-auto">
+          <div className="p-3 text-xs space-y-3 overflow-y-auto" style={{ flex: '1 1 0%'}}>
             {selectedTrack && (
-              <>
-                <h3 className="font-bold text-base text-cyan-300">{selectedTrack.callsign}</h3>
-                <div><span className="font-bold text-gray-400 w-16 inline-block">ID:</span> {selectedTrack.id}</div>
-                <div><span className="font-bold text-gray-400 w-16 inline-block">STATUS:</span> <span className={`font-bold text-${selectedTrack.status === 'FRIENDLY' ? 'green' : selectedTrack.status === 'UNKNOWN' ? 'yellow' : 'red'}-400`}>{selectedTrack.status}</span></div>
-                <div><span className="font-bold text-gray-400 w-16 inline-block">TYPE:</span> {selectedTrack.type}</div>
-                <div><span className="font-bold text-gray-400 w-16 inline-block">ALT:</span> {selectedTrack.altitude} ft</div>
-                <div><span className="font-bold text-gray-400 w-16 inline-block">SPD:</span> {selectedTrack.speed} kts</div>
-                <div><span className="font-bold text-gray-400 w-16 inline-block">MISSION:</span> {selectedTrack.mission}</div>
-                <div><span className="font-bold text-gray-400 w-16 inline-block">CONTROLLER:</span> {selectedTrack.controller}</div>
-                <div><span className="font-bold text-gray-400 w-16 inline-block">FUEL:</span> {selectedTrack.fuel}{typeof selectedTrack.fuel === 'number' && '%'}</div>
-                <div><span className="font-bold text-gray-400 w-16 inline-block">WEAPONS:</span> {selectedTrack.weapons}</div>
-                <div><span className="font-bold text-gray-400 w-16 inline-block">PILOT:</span> {selectedTrack.pilot}</div>
-                <div><span className="font-bold text-gray-400 w-16 inline-block">ETA:</span> {selectedTrack.eta}</div>
-              </>
+              <div>
+                <h3 className="font-bold text-base text-cyan-300 mb-2">{selectedTrack.callsign} [{selectedTrack.id}]</h3>
+                <div className="space-y-2">
+                    <div className="p-2 bg-gray-800/50 rounded">
+                        <div className="font-bold text-yellow-400 mb-1">Primary Info</div>
+                        <div className="grid grid-cols-2 gap-x-2 gap-y-1">
+                            <span>Status:</span> <span className={`font-bold text-${selectedTrack.status === 'FRIENDLY' ? 'green' : selectedTrack.status === 'UNKNOWN' ? 'yellow' : 'red'}-400`}>{selectedTrack.status}</span>
+                            <span>Type:</span> <span>{selectedTrack.type}</span>
+                            <span>Mission:</span> <span>{selectedTrack.mission}</span>
+                            <span>Controller:</span> <span>{selectedTrack.controller}</span>
+                        </div>
+                    </div>
+                    <div className="p-2 bg-gray-800/50 rounded">
+                        <div className="font-bold text-yellow-400 mb-1">Flight Data</div>
+                        <div className="grid grid-cols-2 gap-x-2 gap-y-1">
+                            <span>Altitude:</span> <span>{selectedTrack.altitude} ft</span>
+                            <span>Speed:</span> <span>{selectedTrack.speed} kts</span>
+                            <span>Fuel:</span> <span>{selectedTrack.fuel}{typeof selectedTrack.fuel === 'number' && '%'}</span>
+                            <span>ETA:</span> <span>{selectedTrack.eta}</span>
+                        </div>
+                    </div>
+                    <div className="p-2 bg-gray-800/50 rounded">
+                        <div className="font-bold text-yellow-400 mb-1">Payload & Crew</div>
+                        <div className="grid grid-cols-2 gap-x-2 gap-y-1">
+                            <span>Pilot:</span> <span>{selectedTrack.pilot}</span>
+                            <span>Weapons:</span> <span>{selectedTrack.weapons}</span>
+                        </div>
+                    </div>
+                </div>
+              </div>
             )}
             {selectedThreat && (
-              <>
-                <h3 className="font-bold text-base text-red-400">{selectedThreat.type}</h3>
-                <div><span className="font-bold text-gray-400 w-16 inline-block">ID:</span> {selectedThreat.id}</div>
-                <div><span className="font-bold text-gray-400 w-16 inline-block">STATUS:</span> <span className="font-bold text-yellow-400">{selectedThreat.status}</span></div>
-                <div><span className="font-bold text-gray-400 w-16 inline-block">THREAT:</span> <span className={`font-bold text-${selectedThreat.threat === 'HIGH' ? 'red' : selectedThreat.threat === 'MEDIUM' ? 'orange' : 'yellow'}-400`}>{selectedThreat.threat}</span></div>
-                <div><span className="font-bold text-gray-400 w-16 inline-block">RANGE:</span> {selectedThreat.range} km</div>
-                <div><span className="font-bold text-gray-400 w-16 inline-block">POSITION:</span> {selectedThreat.position.x}, {selectedThreat.position.y}</div>
-              </>
+              <div>
+                <h3 className="font-bold text-base text-red-400 mb-2">{selectedThreat.type} [{selectedThreat.id}]</h3>
+                 <div className="p-2 bg-gray-800/50 rounded">
+                    <div className="font-bold text-yellow-400 mb-1">Threat Assessment</div>
+                    <div className="grid grid-cols-2 gap-x-2 gap-y-1">
+                        <span>Status:</span> <span className="font-bold text-yellow-400">{selectedThreat.status}</span>
+                        <span>Threat:</span> <span className={`font-bold text-${selectedThreat.threat === 'HIGH' ? 'red' : selectedThreat.threat === 'MEDIUM' ? 'orange' : 'yellow'}-400`}>{selectedThreat.threat}</span>
+                        <span>Range:</span> <span>{selectedThreat.range} km</span>
+                        <span>Position:</span> <span>{selectedThreat.position.x}, {selectedThreat.position.y}</span>
+                    </div>
+                </div>
+              </div>
             )}
             {!selectedTrack && !selectedThreat && (
               <div className="text-center text-gray-500 pt-8">No Item Selected</div>
