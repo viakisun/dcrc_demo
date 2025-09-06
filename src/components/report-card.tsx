@@ -118,14 +118,44 @@ export const ReportCard = () => {
                  <SubSection title="DCRC 핵심 시스템 (15개)">
                     <ul className="list-none space-y-2">
                         <li>DCRC-STRATEGIC-001: 전략적 통합 관제 시스템 <StatusTag text="✅ 완료" color="green" /></li>
-                        <li>DCRC-TACTICAL-001~009: 9개 섹터별 관제 시스템 <StatusTag text="추후 제공 예정" color="yellow" /></li>
+                        <li>
+                            DCRC-TACTICAL-001~009: 9개 섹터별 관제 시스템
+                            <Link href="/samples/rokaf-sector-ke14-operations" className="ml-2 text-cyan-400 hover:underline">
+                                (KE-14 작전 샘플 보기)
+                            </Link>
+                        </li>
                         <li>DCRC-COMM-001: 메인 통신 허브 <StatusTag text="✅ 완료" color="green" /></li>
                         <li>DCRC-COMM-002~005: 4개 통신 관제 시스템 <StatusTag text="추후 제공 예정" color="yellow" /></li>
                     </ul>
                 </SubSection>
                 <SubSection title="전문 운영진 워크스테이션 (6개)">
-                     <ul className="list-none space-y-2">
-                        <li>DCRC-OPERATOR-001~006 <StatusTag text="추후 제공 예정" color="yellow" /></li>
+                     <ul className="list-none space-y-3">
+                        <li>DCRC-OPERATOR-001: SECTOR COMMANDER <StatusTag text="추후 제공 예정" color="yellow" /></li>
+                        <li>
+                            DCRC-OPERATOR-002: RADAR CONTROLLER
+                            <Link href="/samples/rokaf-radar-controller-workstation" className="ml-2 text-cyan-400 hover:underline">
+                                (샘플 보기)
+                            </Link>
+                        </li>
+                        <li>
+                            DCRC-OPERATOR-003: FLIGHT CONTROLLER
+                            <Link href="/samples/rokaf-flight-controller-workstation" className="ml-2 text-cyan-400 hover:underline">
+                                (샘플 보기)
+                            </Link>
+                        </li>
+                        <li>
+                            DCRC-OPERATOR-004: DATA ANALYST
+                            <Link href="/samples/rokaf-data-analyst-workstation" className="ml-2 text-cyan-400 hover:underline">
+                                (샘플 보기)
+                            </Link>
+                        </li>
+                        <li>
+                            DCRC-OPERATOR-005: COMM COORDINATOR
+                             <Link href="/samples/comm-coordinator-workstation" className="ml-2 text-cyan-400 hover:underline">
+                                (샘플 보기)
+                            </Link>
+                        </li>
+                        <li>DCRC-OPERATOR-006: BACKUP CONTROLLER <StatusTag text="추후 제공 예정" color="yellow" /></li>
                     </ul>
                 </SubSection>
             </Section>
