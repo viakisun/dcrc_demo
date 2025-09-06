@@ -1,9 +1,9 @@
-import { ReportCard } from '@/components/report-card';
+import { DarcDashboard } from '@/components/darc-dashboard';
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-gray-900 text-white">
-      <ReportCard />
+    <main className="min-h-screen bg-black text-white">
+      <DarcDashboard />
     </main>
   );
 }
