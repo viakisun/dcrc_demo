@@ -1,27 +1,59 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { ChevronDown } from 'lucide-react';
+import dynamic from 'next/dynamic';
+
+const Globe = dynamic(() => import('react-globe.gl'), {
+  ssr: false,
+  loading: () => <div className="absolute inset-0 flex items-center justify-center bg-black text-cyan-300">Loading Globe...</div>,
+});
 
 export const LandingHero = () => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const globeRef = useRef<any>(null);
+
+  useEffect(() => {
+    if (globeRef.current) {
+      globeRef.current.controls().autoRotate = true;
+      globeRef.current.controls().autoRotateSpeed = 0.2;
+      globeRef.current.pointOfView({ lat: 37.5665, lng: 126.9780, altitude: 2 });
+    }
+  }, []);
+
+  const N = 20;
+  const arcsData = [...Array(N).keys()].map(() => ({
+    startLat: (Math.random() - 0.5) * 180,
+    startLng: (Math.random() - 0.5) * 360,
+    endLat: (Math.random() - 0.5) * 180,
+    endLng: (Math.random() - 0.5) * 360,
+    color: [['#00ffff', '#00ff00', '#ffff00', '#ff0000'][Math.round(Math.random() * 3)], ['#00ffff', '#00ff00', '#ffff00', '#ff0000'][Math.round(Math.random() * 3)]]
+  }));
+
   return (
     <div className="relative h-screen w-full overflow-hidden">
-      {/* Background Video */}
-      <video
-        autoPlay
-        loop
-        muted
-        playsInline
-        className="absolute z-0 w-auto min-w-full min-h-full max-w-none"
-        style={{ objectFit: 'cover', objectPosition: 'center' }}
-      >
-        {/* Using a generic, high-quality stock video for placeholder */}
-        <source src="https://cdn.coverr.co/videos/coverr-a-drone-shot-of-a-winding-road-in-a-forest-5546/1080p.mp4" type="video/mp4" />
-      </video>
+      {/* Globe Background */}
+       <div className="absolute inset-0 z-0 opacity-80">
+            <Globe
+                ref={globeRef}
+                globeImageUrl="//unpkg.com/three-globe/example/img/earth-night.jpg"
+                bumpImageUrl="//unpkg.com/three-globe/example/img/earth-topology.png"
+                backgroundColor="rgba(0,0,0,0)"
+                atmosphereColor="cyan"
+                atmosphereAltitude={0.2}
+                arcsData={arcsData}
+                arcColor={'color'}
+                arcDashLength={() => Math.random()}
+                arcDashGap={() => Math.random()}
+                arcDashAnimateTime={() => Math.random() * 4000 + 500}
+                arcStroke={0.5}
+            />
+        </div>
+
 
       {/* Overlay */}
-      <div className="absolute inset-0 z-10 bg-black/70"></div>
+      <div className="absolute inset-0 z-10 bg-black/60"></div>
 
       {/* Content */}
       <div className="relative z-20 flex flex-col items-center justify-center h-full text-white text-center px-4">
