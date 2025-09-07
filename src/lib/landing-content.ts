@@ -54,3 +54,51 @@ export const showcaseContent = {
       { id: 'comm-coordinator-workstation', route: '/samples/comm-coordinator-workstation', title: 'Comm Coordinator WS', description: 'Communications Management' },
   ]
 };
+
+export const aboutContent = {
+  title: "The Next-Generation Unified Drone Operations Command & Control System",
+  subtitle: "Republic of Korea Drone Control and Reporting Center",
+  definition: {
+    title: "What is DCRC?",
+    text: "The DCRC is a strategic core infrastructure operated by the ROK Drone Operations Command. It enables real-time surveillance, control, and coordination of all drone-related operations within the Korean Peninsula and surrounding waters.",
+    points: [
+      "Strategic drone operations command and control",
+      "Real-time situational awareness and analysis",
+      "Threat analysis and immediate response",
+      "Information fusion and rapid dissemination",
+      "Combined operations support and coordination"
+    ]
+  },
+  mission: {
+    title: "Mission & Vision",
+    missionText: "To defend national security and public safety by achieving complete control of the Korean airspace.",
+    visionText: "To set a new global standard in drone security with world-class drone control technology.",
+    values: [
+      { title: "Excellence", text: "Pursuing world-class technology" },
+      { title: "Innovation", text: "Continuous technological innovation" },
+      { title: "Security", text: "Absolute security framework" },
+      { title: "Cooperation", text: "Global partnerships" }
+    ]
+  }
+};
+
+export const capabilitiesContent = {
+    title: "A New Dimension of Control",
+    capabilities: [
+        {
+            title: "Real-time Tracking",
+            description: "Simultaneously control and monitor 50+ drone assets with a 6-second position update cycle and ±5m accuracy. Our system provides real-time path prediction and automated collision avoidance.",
+            image: "/placeholder-image-1.jpg"
+        },
+        {
+            title: "AI-Powered Threat Analysis",
+            description: "Utilize a 3-stage automated risk assessment system. Instantly detect unidentified objects, recognize anomalous behavior patterns, and receive early warnings based on predictive models.",
+            image: "/placeholder-image-2.jpg"
+        },
+        {
+            title: "Instantaneous Response",
+            description: "Achieve initial response within 2 minutes. Relay commands in real-time, automatically escalate emergency situations, and coordinate with multiple agencies through a 24/7 command structure.",
+            image: "/placeholder-image-3.jpg"
+        }
+    ]
+};
