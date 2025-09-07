@@ -4,6 +4,7 @@ import { AboutSection } from '@/components/landing/AboutSection';
 import { CapabilitiesSection } from '@/components/landing/CapabilitiesSection';
 import { OperationsSection } from '@/components/landing/OperationsSection';
 import { InnovationSection } from '@/components/landing/InnovationSection';
+import { ContactSection } from '@/components/landing/ContactSection';
 import { SampleShowcase } from '@/components/landing/SampleShowcase';
 
 export default function Home() {
@@ -16,6 +17,7 @@ export default function Home() {
       <OperationsSection />
       <InnovationSection />
       <SampleShowcase />
+      <ContactSection />
     </main>
   );
 }
