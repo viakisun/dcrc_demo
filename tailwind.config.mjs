@@ -1,4 +1,4 @@
-import { fontFamily } from "tailwindcss/defaultTheme";
+const defaultTheme = require('tailwindcss/defaultTheme');
 
 /** @type {import('tailwindcss').Config} */
 const config = {
@@ -10,8 +10,9 @@ const config = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ["var(--font-geist-sans)", ...fontFamily.sans],
-        mono: ["var(--font-geist-mono)", ...fontFamily.mono],
+        sans: ["var(--font-geist-sans)", ...defaultTheme.fontFamily.sans],
+        mono: ["var(--font-geist-mono)", ...defaultTheme.fontFamily.mono],
+        heading: ["var(--font-orbitron)", ...defaultTheme.fontFamily.sans],
       },
       colors: {
         'darc-primary': '#0A4D3C',
