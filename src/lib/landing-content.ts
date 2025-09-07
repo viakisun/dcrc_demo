@@ -123,6 +123,30 @@ export const operationsContent = {
     }
 };
 
+export const contactContent = {
+    title: "Get in Touch",
+    sections: [
+        {
+            title: "Partnership Inquiries",
+            description: "Explore opportunities for technology, business, or international cooperation.",
+            email: "partnership@dcrc.mil.kr",
+            buttonText: "Propose Partnership"
+        },
+        {
+            title: "Media & Press",
+            description: "Access our media kit, press releases, and other official materials.",
+            email: "media@dcrc.mil.kr",
+            buttonText: "Access Media Kit"
+        },
+        {
+            title: "Technical Inquiries",
+            description: "Contact our engineering team for technical questions and support.",
+            email: "tech-support@dcrc.mil.kr",
+            buttonText: "Submit a Question"
+        }
+    ]
+};
+
 export const innovationContent = {
     title: "Technological Innovation & Future Roadmap",
     roadmap: {
