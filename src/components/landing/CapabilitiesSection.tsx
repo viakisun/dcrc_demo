@@ -32,7 +32,7 @@ export const CapabilitiesSection = () => {
                 <p className="text-gray-400">{capability.description}</p>
               </div>
               <div className="h-64 bg-gray-800 rounded-lg border border-cyan-300/20">
-                {/* Placeholder for an image or a more complex visual */}
+                {/* Using an img tag for external URLs. Next/Image would require config. */}
                 <img src={capability.image} alt={capability.title} className="w-full h-full object-cover rounded-lg opacity-50" />
               </div>
             </motion.div>
