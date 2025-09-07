@@ -54,6 +54,3 @@ export const showcaseContent = {
       { id: 'comm-coordinator-workstation', route: '/samples/comm-coordinator-workstation', title: 'Comm Coordinator WS', description: 'Communications Management' },
   ]
 };
-
-// Add more content sections as needed based on the user's document...
-// For now, these are the core sections for the landing page.
