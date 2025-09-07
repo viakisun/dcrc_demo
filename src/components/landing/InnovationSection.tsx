@@ -26,7 +26,7 @@ export const InnovationSection = () => {
                 transition={{ duration: 0.8 }}
                 className="md:col-span-3 bg-gray-900/30 p-8 rounded-xl border border-cyan-300/20"
             >
-                <h3 className="text-2xl font-bold text-darc-cyan mb-4 flex items-center gap-3"><Rocket/> {innovationContent.roadmap.title}</h3>
+                <h3 className="text-2xl font-bold text-darc-cyan mb-4 flex items-center gap-3">{innovationContent.roadmap.icon} {innovationContent.roadmap.title}</h3>
                 <div className="relative pl-6 border-l-2 border-cyan-300/30">
                     {/* Current Year */}
                     <div className="mb-8 relative">
@@ -53,7 +53,7 @@ export const InnovationSection = () => {
                 transition={{ duration: 0.8, delay: 0.2 }}
                 className="md:col-span-2 bg-gray-900/30 p-8 rounded-xl border border-cyan-300/20"
             >
-                <h3 className="text-2xl font-bold text-darc-cyan mb-4 flex items-center gap-3"><Globe/> {innovationContent.partners.title}</h3>
+                <h3 className="text-2xl font-bold text-darc-cyan mb-4 flex items-center gap-3">{innovationContent.partners.icon} {innovationContent.partners.title}</h3>
                 <div className="space-y-4">
                     {innovationContent.partners.partners.map((partner, i) => (
                          <div key={i}>

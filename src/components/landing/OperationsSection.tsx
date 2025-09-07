@@ -25,7 +25,7 @@ export const OperationsSection = () => {
                 viewport={{ once: true }}
                 transition={{ duration: 0.8 }}
             >
-                <h3 className="text-2xl font-bold text-darc-cyan mb-4 flex items-center gap-3"><Users/> {operationsContent.commandStructure.title}</h3>
+                <h3 className="text-2xl font-bold text-darc-cyan mb-4 flex items-center gap-3">{operationsContent.commandStructure.icon} {operationsContent.commandStructure.title}</h3>
                 <div className="space-y-4">
                     {operationsContent.commandStructure.tiers.map((tier, i) => (
                         <div key={i} className="p-4 bg-gray-800/50 border border-cyan-300/10 rounded-lg">
@@ -41,7 +41,7 @@ export const OperationsSection = () => {
                 viewport={{ once: true }}
                 transition={{ duration: 0.8, delay: 0.2 }}
             >
-                <h3 className="text-2xl font-bold text-darc-cyan mb-4 flex items-center gap-3"><Clock/> {operationsContent.operationsCycle.title}</h3>
+                <h3 className="text-2xl font-bold text-darc-cyan mb-4 flex items-center gap-3">{operationsContent.operationsCycle.icon} {operationsContent.operationsCycle.title}</h3>
                 <div className="space-y-4">
                     {operationsContent.operationsCycle.shifts.map((shift, i) => (
                          <div key={i} className="p-4 bg-gray-800/50 border border-cyan-300/10 rounded-lg">
