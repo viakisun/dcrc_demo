@@ -102,3 +102,50 @@ export const capabilitiesContent = {
         }
     ]
 };
+
+export const operationsContent = {
+    title: "Command & Control Structure",
+    commandStructure: {
+        title: "3-Tier Command System",
+        tiers: [
+            { level: "⭐⭐ Strategic", role: "Drone Commander", description: "Oversees entire East-Asian theater." },
+            { level: "🎯 Tactical", role: "Sector Commander", description: "Detailed control over 9 grid sectors." },
+            { level: "👨‍💻 Operational", role: "Specialized Operators", description: "6 specialized roles for 24/7 operations." }
+        ]
+    },
+    operationsCycle: {
+        title: "24/7 Operations Cycle",
+        shifts: [
+            { name: "Alpha Shift", time: "08:00-16:00", focus: "Primary operations & training.", staff: "18 Full Staff" },
+            { name: "Bravo Shift", time: "16:00-24:00", focus: "Evening ops & next-day planning.", staff: "15 Core Staff" },
+            { name: "Charlie Shift", time: "24:00-08:00", focus: "Night watch & system maintenance.", staff: "12 Minimal Staff" }
+        ]
+    }
+};
+
+export const innovationContent = {
+    title: "Technological Innovation & Future Roadmap",
+    roadmap: {
+        title: "5-Year Development Roadmap",
+        current: {
+            year: "2025 (Current)",
+            items: ["Base DCRC System Established", "24/7 Operations in 9 Sectors", "AI-based Threat Analysis", "US-ROK System Integration"]
+        },
+        future: [
+            { year: "2026", item: "Advanced AI Predictive System" },
+            { year: "2027", item: "Fully Autonomous Control System" },
+            { year: "2028", item: "AI Commander's Assistant" },
+            { year: "2029", item: "Quantum-based Analysis" }
+        ]
+    },
+    partners: {
+        title: "Global Partnership Network",
+        partners: [
+            { name: "USA", description: "Strategic Alliance" },
+            { name: "JAPAN", description: "Regional Security" },
+            { name: "AUSTRALIA", description: "Pacific Partner" },
+            { name: "UK", description: "Technology Cooperation" },
+            { name: "ISRAEL", description: "Advanced Technology" }
+        ]
+    }
+};
