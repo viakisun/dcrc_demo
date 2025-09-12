@@ -139,30 +139,37 @@ const ROKAFMCRCAdvanced = () => {
       'HOSTILE': 'rounded-none rotate-45'
     };
 
-    const vectorAngle = Math.atan2(track.vector.dy, track.vector.dx) * 180 / Math.PI;
-    const vectorLength = Math.min(track.speed / 25, 25);
+    const vector = track.vector as { dx: number; dy: number };
+    const vectorAngle = Math.atan2(vector.dy, vector.dx) * 180 / Math.PI;
+    const vectorLength = Math.min((track.speed as number) / 25, 25);
+    const position = track.position as { x: number; y: number };
+    const status = track.status as string;
+    const id = track.id as string;
+    const callsign = track.callsign as string;
+    const type = track.type as string;
+    const altitude = track.altitude as number;
 
     return (
-      <div key={track.id} className="absolute">
+      <div key={id} className="absolute">
         {/* 메인 트랙 표시 */}
         <div 
-          className={`absolute ${colors[track.status as keyof typeof colors]} ${shapes[track.status as keyof typeof shapes]} border-2 p-1.5 text-[10px] font-mono transform -translate-x-1/2 -translate-y-1/2 cursor-pointer hover:bg-opacity-80 transition-all shadow-lg`}
+          className={`absolute ${colors[status as keyof typeof colors]} ${shapes[status as keyof typeof shapes]} border-2 p-1.5 text-[10px] font-mono transform -translate-x-1/2 -translate-y-1/2 cursor-pointer hover:bg-opacity-80 transition-all shadow-lg`}
           style={{ 
-            left: `${track.position.x}px`, 
-            top: `${track.position.y}px`
+            left: `${position.x}px`, 
+            top: `${position.y}px`
           }}
           onClick={() => setSelectedTrack(track)}
         >
           <div className="flex items-center space-x-1">
             <div className={`w-3 h-3 ${
-              track.status === 'FRIENDLY' ? 'bg-green-400' : 
-              track.status === 'UNKNOWN' ? 'bg-yellow-400' : 'bg-red-400'
-            } ${shapes[track.status as keyof typeof shapes]}`}></div>
-            <span className="text-[9px] font-bold">{track.callsign}</span>
+              status === 'FRIENDLY' ? 'bg-green-400' : 
+              status === 'UNKNOWN' ? 'bg-yellow-400' : 'bg-red-400'
+            } ${shapes[status as keyof typeof shapes]}`}></div>
+            <span className="text-[9px] font-bold">{callsign}</span>
           </div>
           <div className="text-[8px] mt-1">
-            <div>{track.type}</div>
-            <div>{track.altitude}ft</div>
+            <div>{type}</div>
+            <div>{altitude}ft</div>
           </div>
         </div>
         
@@ -170,21 +177,21 @@ const ROKAFMCRCAdvanced = () => {
         <svg 
           className="absolute pointer-events-none"
           style={{ 
-            left: `${track.position.x}px`, 
-            top: `${track.position.y}px`,
+            left: `${position.x}px`, 
+            top: `${position.y}px`,
             transform: 'translate(-50%, -50%)'
           }}
           width="60" 
           height="60"
         >
           <defs>
-            <marker id={`arrowhead-${track.id}`} markerWidth="8" markerHeight="6" 
+            <marker id={`arrowhead-${id}`} markerWidth="8" markerHeight="6" 
               refX="7" refY="3" orient="auto">
               <polygon 
                 points="0 0, 8 3, 0 6"
                 fill={
-                  track.status === 'FRIENDLY' ? '#4ade80' : 
-                  track.status === 'UNKNOWN' ? '#facc15' : '#f87171'
+                  status === 'FRIENDLY' ? '#4ade80' : 
+                  status === 'UNKNOWN' ? '#facc15' : '#f87171'
                 }
               />
             </marker>
@@ -195,11 +202,11 @@ const ROKAFMCRCAdvanced = () => {
             x2={30 + vectorLength * Math.cos(vectorAngle * Math.PI / 180)} 
             y2={30 + vectorLength * Math.sin(vectorAngle * Math.PI / 180)}
             stroke={
-              track.status === 'FRIENDLY' ? '#4ade80' : 
-              track.status === 'UNKNOWN' ? '#facc15' : '#f87171'
+              status === 'FRIENDLY' ? '#4ade80' : 
+              status === 'UNKNOWN' ? '#facc15' : '#f87171'
             }
             strokeWidth="2"
-            markerEnd={`url(#arrowhead-${track.id})`}
+            markerEnd={`url(#arrowhead-${id})`}
           />
         </svg>
 
@@ -208,18 +215,18 @@ const ROKAFMCRCAdvanced = () => {
           <svg 
             className="absolute pointer-events-none"
             style={{ 
-              left: `${track.position.x}px`, 
-              top: `${track.position.y}px`,
+              left: `${position.x}px`, 
+              top: `${position.y}px`,
               transform: 'translate(-50%, -50%)'
             }}
             width="120" 
             height="120"
           >
             <path
-              d={`M 60,60 L ${60 - track.vector.dx * 3},${60 - track.vector.dy * 3} L ${60 - track.vector.dx * 6},${60 - track.vector.dy * 6} L ${60 - track.vector.dx * 9},${60 - track.vector.dy * 9}`}
+              d={`M 60,60 L ${60 - vector.dx * 3},${60 - vector.dy * 3} L ${60 - vector.dx * 6},${60 - vector.dy * 6} L ${60 - vector.dx * 9},${60 - vector.dy * 9}`}
               stroke={
-                track.status === 'FRIENDLY' ? '#4ade80' : 
-                track.status === 'UNKNOWN' ? '#facc15' : '#f87171'
+                status === 'FRIENDLY' ? '#4ade80' : 
+                status === 'UNKNOWN' ? '#facc15' : '#f87171'
               }
               strokeWidth="1"
               strokeDasharray="3,3"
@@ -239,25 +246,31 @@ const ROKAFMCRCAdvanced = () => {
       'LOW': '#eab308'
     };
 
+    const id = threat.id as string;
+    const position = threat.position as { x: number; y: number };
+    const range = threat.range as number;
+    const threatLevel = threat.threat as string;
+    const type = threat.type as string;
+
     return (
-      <div key={threat.id} className="absolute">
+      <div key={id} className="absolute">
         {/* 위협 범위 원 */}
         <svg
           className="absolute pointer-events-none"
           style={{ 
-            left: `${threat.position.x}px`, 
-            top: `${threat.position.y}px`,
+            left: `${position.x}px`, 
+            top: `${position.y}px`,
             transform: 'translate(-50%, -50%)'
           }}
-          width={threat.range / 2}
-          height={threat.range / 2}
+          width={range / 2}
+          height={range / 2}
         >
           <circle 
-            cx={threat.range / 4} 
-            cy={threat.range / 4} 
-            r={threat.range / 4}
+            cx={range / 4} 
+            cy={range / 4} 
+            r={range / 4}
             fill="none"
-            stroke={threatColors[threat.threat as keyof typeof threatColors]}
+            stroke={threatColors[threatLevel as keyof typeof threatColors]}
             strokeWidth="1"
             strokeDasharray="4,4"
             opacity="0.3"
@@ -268,15 +281,15 @@ const ROKAFMCRCAdvanced = () => {
         <div 
           className="absolute transform -translate-x-1/2 -translate-y-1/2 cursor-pointer"
           style={{ 
-            left: `${threat.position.x}px`, 
-            top: `${threat.position.y}px`
+            left: `${position.x}px`, 
+            top: `${position.y}px`
           }}
         >
           <div className="bg-red-900/60 border border-red-400 rounded p-1">
             <Skull className="w-3 h-3 text-red-400" />
           </div>
           <div className="text-[8px] text-red-400 text-center mt-1 font-mono">
-            {threat.type.split(' ')[0]}
+            {type.split(' ')[0]}
           </div>
         </div>
       </div>
@@ -604,33 +617,33 @@ const ROKAFMCRCAdvanced = () => {
               <div className="text-xs space-y-2">
                 <div className="grid grid-cols-2 gap-2">
                   <div className="text-green-600">Callsign:</div>
-                  <div className="text-green-300 font-bold">{selectedTrack.callsign}</div>
+                  <div className="text-green-300 font-bold">{selectedTrack.callsign as string}</div>
                   <div className="text-green-600">Type:</div>
-                  <div className="text-green-300">{selectedTrack.type}</div>
+                  <div className="text-green-300">{selectedTrack.type as string}</div>
                   <div className="text-green-600">Mission:</div>
-                  <div className="text-green-300">{selectedTrack.mission}</div>
+                  <div className="text-green-300">{selectedTrack.mission as string}</div>
                   <div className="text-green-600">Altitude:</div>
-                  <div className="text-green-300">{selectedTrack.altitude}ft</div>
+                  <div className="text-green-300">{selectedTrack.altitude as number}ft</div>
                   <div className="text-green-600">Speed:</div>
-                  <div className="text-green-300">{selectedTrack.speed}kt</div>
+                  <div className="text-green-300">{selectedTrack.speed as number}kt</div>
                   <div className="text-green-600">Fuel:</div>
-                  <div className="text-green-300">{selectedTrack.fuel}%</div>
+                  <div className="text-green-300">{selectedTrack.fuel as number}%</div>
                   <div className="text-green-600">Weapons:</div>
-                  <div className="text-green-300">{selectedTrack.weapons}</div>
+                  <div className="text-green-300">{selectedTrack.weapons as string}</div>
                   <div className="text-green-600">Pilot:</div>
-                  <div className="text-green-300">{selectedTrack.pilot}</div>
+                  <div className="text-green-300">{selectedTrack.pilot as string}</div>
                   <div className="text-green-600">ETA RTB:</div>
-                  <div className="text-green-300">{selectedTrack.eta}</div>
+                  <div className="text-green-300">{selectedTrack.eta as string}</div>
                   <div className="text-green-600">Controller:</div>
-                  <div className="text-green-300">{selectedTrack.controller}</div>
+                  <div className="text-green-300">{selectedTrack.controller as string}</div>
                 </div>
                 <div className="mt-3 pt-2 border-t border-gray-700">
                   <div className={`px-2 py-1 rounded text-center font-bold ${
-                    selectedTrack.status === 'FRIENDLY' ? 'bg-green-900 text-green-300' :
-                    selectedTrack.status === 'UNKNOWN' ? 'bg-yellow-900 text-yellow-300' :
+                    (selectedTrack.status as string) === 'FRIENDLY' ? 'bg-green-900 text-green-300' :
+                    (selectedTrack.status as string) === 'UNKNOWN' ? 'bg-yellow-900 text-yellow-300' :
                     'bg-red-900 text-red-300'
                   }`}>
-                    {selectedTrack.status}
+                    {selectedTrack.status as string}
                   </div>
                 </div>
               </div>
@@ -646,7 +659,8 @@ const ROKAFMCRCAdvanced = () => {
             <div className="space-y-2 text-xs">
               {Object.entries(
                 activeTracks.reduce((acc: Record<string, number>, track: Record<string, unknown>) => {
-                  acc[track.mission] = (acc[track.mission] || 0) + 1;
+                  const mission = track.mission as string;
+                  acc[mission] = (acc[mission] || 0) + 1;
                   return acc;
                 }, {})
               ).map(([mission, count]: [string, number]) => (
