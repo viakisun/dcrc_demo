@@ -118,7 +118,7 @@ export default function RadarControllerWorkstation() {
 
         {/* Footer */}
         <footer className="mt-8 text-center text-sm text-gray-500">
-          <p>ROKAF DCRC - Radar Controller Workstation</p>
+          <p>ROKAF MCRC - Radar Controller Workstation</p>
           <p>Classified System - Authorized Personnel Only</p>
         </footer>
       </div>

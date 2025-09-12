@@ -20,7 +20,7 @@ const orbitron = Orbitron({
 });
 
 export const metadata: Metadata = {
-  title: "DCRC - Drone Control and Reporting Center",
+  title: "MCRC - Master Control & Reporting Center",
   description: "The future of autonomous defense systems.",
 };
 

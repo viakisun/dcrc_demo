@@ -79,7 +79,7 @@ export default function MCRCAdvancedV2() {
 
         {/* Footer */}
         <footer className="mt-8 text-center text-sm text-gray-500">
-          <p>ROKAF DCRC - Drone Control and Reporting Center</p>
+          <p>ROKAF MCRC - Master Control and Reporting Center</p>
           <p>Classified System - Authorized Personnel Only</p>
         </footer>
       </div>

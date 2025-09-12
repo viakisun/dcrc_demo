@@ -32,7 +32,7 @@ export function DashboardContainer({ samples }: DashboardContainerProps) {
     <div className="container mx-auto">
       {/* Hero Section */}
       <header className="text-center py-16">
-        <h1 className="text-5xl font-bold text-green-400">DCRC Demo Samples</h1>
+        <h1 className="text-5xl font-bold text-green-400">MCRC Demo Samples</h1>
         <p className="text-lg text-gray-400 mt-4">
           A collection of interactive command and control user interface demonstrations.
         </p>

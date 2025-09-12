@@ -2,7 +2,7 @@ import { Globe, BrainCircuit, ShieldAlert, Layers, Users, Clock, Rocket } from '
 import React from 'react';
 
 export const heroContent = {
-  headline: "ROK DCRC",
+  headline: "ROKAF MCRC",
   subheadline: "Drone Control and Reporting Center",
   tagline: "Defining the Future of Autonomous Airspace Dominance",
   buttons: {
@@ -41,8 +41,8 @@ export const aboutContent = {
   title: "The Next-Generation Unified Drone Operations Command & Control System",
   subtitle: "Republic of Korea Drone Control and Reporting Center",
   definition: {
-    title: "What is DCRC?",
-    text: "The DCRC is a strategic core infrastructure operated by the ROK Drone Operations Command. It enables real-time surveillance, control, and coordination of all drone-related operations within the Korean Peninsula and surrounding waters.",
+    title: "What is MCRC?",
+    text: "The MCRC is a strategic core infrastructure operated by the ROKAF Drone Operations Command. It enables real-time surveillance, control, and coordination of all drone-related operations within the Korean Peninsula and surrounding waters.",
     points: [
       "Strategic drone operations command and control",
       "Real-time situational awareness and analysis",
@@ -108,7 +108,7 @@ export const innovationContent = {
         icon: React.createElement(Rocket, {}),
         current: {
             year: "2025 (Current)",
-            items: ["Base DCRC System Established", "24/7 Operations in 9 Sectors", "AI-based Threat Analysis", "US-ROK System Integration"]
+            items: ["Base MCRC System Established", "24/7 Operations in 9 Sectors", "AI-based Threat Analysis", "US-ROKAF System Integration"]
         },
         future: [
             { year: "2026", item: "Advanced AI Predictive System" },

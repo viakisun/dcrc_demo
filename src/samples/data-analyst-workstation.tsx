@@ -129,7 +129,7 @@ export default function DataAnalystWorkstation() {
 
         {/* Footer */}
         <footer className="mt-8 text-center text-sm text-gray-500">
-          <p>ROKAF DCRC - Data Analyst Workstation</p>
+          <p>ROKAF MCRC - Data Analyst Workstation</p>
           <p>Classified System - Authorized Personnel Only</p>
         </footer>
       </div>
