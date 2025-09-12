@@ -100,10 +100,10 @@ const ROKAFMCRCSystem = () => {
       controller: 'KE-16'
     },
     { 
-      id: 'DRONE001', 
+      id: 'AIRCRAFT001', 
       callsign: 'HAWK-01', 
-      type: 'MQ-9', 
-      mission: 'ISR',
+      type: 'F-16C', 
+      mission: 'CAP',
       position: { x: 340, y: 200 },
       vector: { dx: 3, dy: -2 },
       speed: 120,

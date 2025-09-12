@@ -63,15 +63,15 @@ const ROKAFMCRCAdvanced = () => {
       speed: 480, altitude: 35000, status: 'FRIENDLY', controller: 'JE-10',
       fuel: 85, weapons: 'AIM-120C x2, AIM-9X x2', pilot: 'MAJ Park H.S.', eta: '16:00Z'
     },
-    // 드론 편대
+    // 전투기 편대
     { 
-      id: 'UAV001', callsign: 'HAWK-01', type: 'MQ-9 Reaper', mission: 'ISR',
+      id: 'AIRCRAFT001', callsign: 'HAWK-01', type: 'F-16C', mission: 'CAP',
       position: { x: 340, y: 200 }, vector: { dx: 3, dy: -2 },
       speed: 135, altitude: 18000, status: 'FRIENDLY', controller: 'JE-14',
       fuel: 92, weapons: 'Hellfire x2', pilot: 'SGT Kim M.J.', eta: '18:45Z'
     },
     { 
-      id: 'UAV002', callsign: 'GHOST-02', type: 'KUS-FS', mission: 'SEAD',
+      id: 'AIRCRAFT002', callsign: 'GHOST-02', type: 'F-15K', mission: 'SEAD',
       position: { x: 320, y: 220 }, vector: { dx: 5, dy: 1 },
       speed: 180, altitude: 15000, status: 'FRIENDLY', controller: 'JE-14',
       fuel: 78, weapons: 'AGM-88 x4', pilot: 'SGT Park D.K.', eta: '17:20Z'
@@ -312,7 +312,7 @@ const ROKAFMCRCAdvanced = () => {
             </div>
             <div>
               <h1 className="text-2xl font-bold text-green-300">ROKAF MCRC-II</h1>
-              <p className="text-sm text-green-500">Master Control and Reporting Center - Next Generation</p>
+              <p className="text-sm text-green-500">Intelligent Air Defense Command Center - Next Generation</p>
             </div>
             <div className="flex space-x-2">
               <div className={`px-2 py-1 rounded text-xs font-bold ${
@@ -682,7 +682,7 @@ const ROKAFMCRCAdvanced = () => {
               <div className="text-green-600">[{currentTime.toLocaleTimeString()}] VIPER-01: Fuel check 68%</div>
               <div className="text-yellow-600">[{currentTime.toLocaleTimeString()}] UNKNOWN-1: No IFF response</div>
               <div className="text-red-600">[{currentTime.toLocaleTimeString()}] BANDIT-1: Hostile track confirmed</div>
-              <div className="text-green-600">[{currentTime.toLocaleTimeString()}] HAWK-01: ISR mission complete</div>
+              <div className="text-green-600">[{currentTime.toLocaleTimeString()}] HAWK-01: CAP mission complete</div>
             </div>
           </div>
 

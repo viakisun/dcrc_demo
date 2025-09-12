@@ -105,11 +105,11 @@ const ROKAFMCRCAISystem = () => {
       threatLevel: 0, aiRecommendation: 'MAINTAIN_CAP'
     },
     { 
-      id: 'UAV001', callsign: 'HAWK-01', type: 'MQ-9 Reaper', mission: 'ISR',
+      id: 'AIRCRAFT001', callsign: 'HAWK-01', type: 'F-16C', mission: 'CAP',
       position: { x: 340, y: 200 }, vector: { dx: 3, dy: -2 },
       speed: 135, altitude: 18000, status: 'FRIENDLY', controller: 'JE-14',
       fuel: 92, weapons: 'Hellfire x2', pilot: 'SGT Kim M.J.', eta: '18:45Z',
-      aiClassification: 'AI_AUTONOMOUS', aiConfidence: 97, predictedPath: 'ISR_PATTERN_DELTA',
+      aiClassification: 'AI_AUTONOMOUS', aiConfidence: 97, predictedPath: 'CAP_PATTERN_DELTA',
       threatLevel: 0, aiRecommendation: 'CONTINUE_MISSION'
     },
     { 

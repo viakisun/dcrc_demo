@@ -61,7 +61,7 @@ const ROKAFSectorKE14Detail = () => {
       heading: 85, squawk: '1202', flightLevel: 'FL270'
     },
     { 
-      id: 'UAV001', callsign: 'HAWK-01', type: 'MQ-9 Reaper', mission: 'ISR',
+      id: 'AIRCRAFT001', callsign: 'HAWK-01', type: 'F-16C', mission: 'CAP',
       position: { x: 340, y: 200 }, vector: { dx: 3, dy: -2 },
       speed: 135, altitude: 18000, status: 'FRIENDLY', controller: 'OPS-02',
       fuel: 92, weapons: 'Hellfire x2', pilot: 'SGT Kim M.J.', eta: '18:45Z',
@@ -87,7 +87,7 @@ const ROKAFSectorKE14Detail = () => {
   const commLogs = [
     { time: '14:30:15', operator: 'OPS-01', callsign: 'VIPER-01', message: 'Target acquired, proceeding to intercept', type: 'RADIO' },
     { time: '14:28:42', operator: 'CMD', callsign: 'SECTOR', message: 'Confirm target ID and vector', type: 'COMMAND' },
-    { time: '14:25:18', operator: 'OPS-02', callsign: 'HAWK-01', message: 'ISR mission complete, RTB', type: 'RADIO' },
+    { time: '14:25:18', operator: 'OPS-02', callsign: 'HAWK-01', message: 'CAP mission complete, RTB', type: 'RADIO' },
     { time: '14:22:55', operator: 'OPS-01', callsign: 'VIPER-02', message: 'Formation established, CAP active', type: 'RADIO' },
     { time: '14:20:33', operator: 'OPS-04', callsign: 'SECTOR', message: 'All operators report status', type: 'COMMAND' },
     { time: '14:18:07', operator: 'OPS-01', callsign: 'KAL-123', message: 'Cleared to FL370, contact Center', type: 'RADIO' }
@@ -96,7 +96,7 @@ const ROKAFSectorKE14Detail = () => {
   // 섹터 설정 및 상태
   const sectorSettings = {
     alertLevel: 'GREEN',
-    droneCount: 5,
+    aircraftCount: 5,
     weather: 'Clear',
     visibility: '15km',
     wind: '280°/18kt',
@@ -239,8 +239,8 @@ const ROKAFSectorKE14Detail = () => {
               <Crosshair className="w-8 h-8 text-blue-200" />
             </div>
             <div>
-              <h1 className="text-2xl font-bold text-blue-300">SECTOR KE-14 Operations</h1>
-              <p className="text-sm text-blue-500">Advanced Air Defense Sector Control Center</p>
+              <h1 className="text-2xl font-bold text-blue-300">SECTOR KE-14 Air Defense Operations</h1>
+              <p className="text-sm text-blue-500">Regional Air Defense Operations Center</p>
             </div>
             <div className="flex space-x-2">
               <div className={`px-2 py-1 rounded text-xs font-bold ${
@@ -269,8 +269,8 @@ const ROKAFSectorKE14Detail = () => {
               <div className="text-yellow-600">MISSIONS</div>
             </div>
             <div className="text-center">
-              <div className="text-purple-400 font-bold">{sectorSettings.droneCount}</div>
-              <div className="text-purple-600">DRONES</div>
+              <div className="text-purple-400 font-bold">{sectorSettings.aircraftCount}</div>
+              <div className="text-purple-600">AIRCRAFT</div>
             </div>
           </div>
         </div>
@@ -386,8 +386,8 @@ const ROKAFSectorKE14Detail = () => {
                 <div className="text-yellow-300">{sectorSettings.unknownTracks}</div>
                 <div className="text-blue-600">Active Missions:</div>
                 <div className="text-purple-300">{sectorSettings.activeMissions}</div>
-                <div className="text-blue-600">Drone Count:</div>
-                <div className="text-cyan-300">{sectorSettings.droneCount}</div>
+                <div className="text-blue-600">Aircraft Count:</div>
+                <div className="text-cyan-300">{sectorSettings.aircraftCount}</div>
                 <div className="text-blue-600">Weather:</div>
                 <div className="text-yellow-300">{sectorSettings.weather}</div>
               </div>
