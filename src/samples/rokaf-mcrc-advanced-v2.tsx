@@ -2,20 +2,15 @@
 
 import React, { useState, useEffect } from 'react';
 import { 
-  Shield, Target, Navigation, Radar, Radio, Satellite,
-  AlertTriangle, CheckCircle, XCircle, Clock, Battery,
-  Eye, Camera, Crosshair, Map, Globe, Zap, Activity,
-  Users, Settings, Bell, Download, Upload, RefreshCw,
-  Plane, Wind, Thermometer, CloudRain, Sun, Moon,
-  Lock, Unlock, Key, FileText, Headphones, Mic,
-  Flame, Skull, Minus, Plus, Maximize, Minimize
+  Target, Radar, Crosshair, Zap, Activity,
+  Settings, Plane, CloudRain, Flame, Skull, Radio
 } from 'lucide-react';
 
 const ROKAFMCRCAdvanced = () => {
   const [currentTime, setCurrentTime] = useState(new Date());
   const [selectedGrid, setSelectedGrid] = useState('KE-12');
-  const [selectedTrack, setSelectedTrack] = useState<any>(null);
-  const [threatLevel, setThreatLevel] = useState('FPCON-BRAVO');
+  const [selectedTrack, setSelectedTrack] = useState<Record<string, unknown> | null>(null);
+  const [threatLevel] = useState('FPCON-BRAVO');
   const [radarMode, setRadarMode] = useState('WIDE_AREA');
   const [showTrails, setShowTrails] = useState(true);
   const [alertLevel, setAlertLevel] = useState('NORMAL');
@@ -131,7 +126,7 @@ const ROKAFMCRCAdvanced = () => {
     { id: 'AAA001', type: 'ZSU-23-4', position: { x: 260, y: 220 }, range: 25, status: 'STANDBY', threat: 'LOW' }
   ];
 
-  const renderTrack = (track: any) => {
+  const renderTrack = (track: Record<string, unknown>) => {
     const colors = {
       'FRIENDLY': 'text-green-400 bg-green-900/30 border-green-400',
       'UNKNOWN': 'text-yellow-400 bg-yellow-900/30 border-yellow-400',
@@ -237,7 +232,7 @@ const ROKAFMCRCAdvanced = () => {
     );
   };
 
-  const renderGroundThreat = (threat: any) => {
+  const renderGroundThreat = (threat: Record<string, unknown>) => {
     const threatColors = {
       'HIGH': '#ef4444',
       'MEDIUM': '#f97316', 
@@ -650,11 +645,11 @@ const ROKAFMCRCAdvanced = () => {
             </h3>
             <div className="space-y-2 text-xs">
               {Object.entries(
-                activeTracks.reduce((acc: any, track: any) => {
+                activeTracks.reduce((acc: Record<string, number>, track: Record<string, unknown>) => {
                   acc[track.mission] = (acc[track.mission] || 0) + 1;
                   return acc;
                 }, {})
-              ).map(([mission, count]: [string, any]) => (
+              ).map(([mission, count]: [string, number]) => (
                 <div key={mission} className="flex justify-between items-center">
                   <span className="text-green-600">{mission}</span>
                   <span className="text-green-300 font-bold">{count}</span>

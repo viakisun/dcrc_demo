@@ -3,7 +3,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { operationsContent } from '@/lib/landing-content';
-import { Users, Clock } from 'lucide-react';
+// import { Users, Clock } from 'lucide-react';
 
 export const OperationsSection = () => {
   return (

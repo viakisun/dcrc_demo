@@ -3,7 +3,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { innovationContent } from '@/lib/landing-content';
-import { Rocket, Globe } from 'lucide-react';
+// import { Rocket, Globe } from 'lucide-react';
 
 export const InnovationSection = () => {
   return (

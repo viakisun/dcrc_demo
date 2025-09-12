@@ -2,14 +2,8 @@
 
 import React, { useState, useEffect } from 'react';
 import { 
-  Users, Settings, MessageSquare, Crosshair, Target, 
-  Radio, Headphones, Mic, Bell, AlertTriangle, 
-  CheckCircle, XCircle, Clock, Battery, Eye, 
-  Camera, Map, Globe, Zap, Activity, Shield,
-  Lock, Unlock, Key, FileText, Download, Upload,
-  RefreshCw, Plane, Wind, Thermometer, CloudRain,
-  Sun, Moon, Flame, Skull, Minus, Plus, 
-  Maximize, Minimize, Navigation, Radar, Satellite
+  Users, Settings, MessageSquare, Crosshair, 
+  Activity, Plane, CloudRain
 } from 'lucide-react';
 
 const ROKAFSectorKE14Detail = () => {
@@ -17,7 +11,7 @@ const ROKAFSectorKE14Detail = () => {
   const [selectedOperator, setSelectedOperator] = useState('OPS-01');
   const [commsChannel, setCommsChannel] = useState('PRIMARY');
   const [alertStatus, setAlertStatus] = useState('GREEN');
-  const [selectedTrack, setSelectedTrack] = useState<any>(null);
+  const [selectedTrack, setSelectedTrack] = useState<Record<string, unknown> | null>(null);
   const [showTrails, setShowTrails] = useState(true);
   const [radarMode, setRadarMode] = useState('SECTOR_SCAN');
 
@@ -115,7 +109,7 @@ const ROKAFSectorKE14Detail = () => {
     unknownTracks: sectorTracks.filter(t => t.status === 'UNKNOWN').length
   };
 
-  const renderTrack = (track: any) => {
+  const renderTrack = (track: Record<string, unknown>) => {
     const colors = {
       'FRIENDLY': 'text-green-400 bg-green-900/30 border-green-400',
       'UNKNOWN': 'text-yellow-400 bg-yellow-900/30 border-yellow-400',
@@ -577,11 +571,11 @@ const ROKAFSectorKE14Detail = () => {
             </h3>
             <div className="space-y-2 text-xs">
               {Object.entries(
-                sectorTracks.reduce((acc: any, track: any) => {
+                sectorTracks.reduce((acc: Record<string, number>, track: Record<string, unknown>) => {
                   acc[track.mission] = (acc[track.mission] || 0) + 1;
                   return acc;
                 }, {})
-              ).map(([mission, count]: [string, any]) => (
+              ).map(([mission, count]: [string, number]) => (
                 <div key={mission} className="flex justify-between items-center">
                   <span className="text-blue-600">{mission}</span>
                   <span className="text-blue-300 font-bold">{count}</span>
