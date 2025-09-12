@@ -17,7 +17,7 @@ const ROKAFSectorKE14Detail = () => {
   const [selectedOperator, setSelectedOperator] = useState('OPS-01');
   const [commsChannel, setCommsChannel] = useState('PRIMARY');
   const [alertStatus, setAlertStatus] = useState('GREEN');
-  const [selectedTrack, setSelectedTrack] = useState(null);
+  const [selectedTrack, setSelectedTrack] = useState<any>(null);
   const [showTrails, setShowTrails] = useState(true);
   const [radarMode, setRadarMode] = useState('SECTOR_SCAN');
 
@@ -115,7 +115,7 @@ const ROKAFSectorKE14Detail = () => {
     unknownTracks: sectorTracks.filter(t => t.status === 'UNKNOWN').length
   };
 
-  const renderTrack = (track) => {
+  const renderTrack = (track: any) => {
     const colors = {
       'FRIENDLY': 'text-green-400 bg-green-900/30 border-green-400',
       'UNKNOWN': 'text-yellow-400 bg-yellow-900/30 border-yellow-400',
@@ -135,7 +135,7 @@ const ROKAFSectorKE14Detail = () => {
       <div key={track.id} className="absolute">
         {/* 메인 트랙 표시 */}
         <div 
-          className={`absolute ${colors[track.status]} ${shapes[track.status]} border-2 p-1.5 text-[10px] font-mono transform -translate-x-1/2 -translate-y-1/2 cursor-pointer hover:bg-opacity-80 transition-all shadow-lg`}
+          className={`absolute ${colors[track.status as keyof typeof colors]} ${shapes[track.status as keyof typeof shapes]} border-2 p-1.5 text-[10px] font-mono transform -translate-x-1/2 -translate-y-1/2 cursor-pointer hover:bg-opacity-80 transition-all shadow-lg`}
           style={{ 
             left: `${track.position.x}px`, 
             top: `${track.position.y}px`
@@ -146,7 +146,7 @@ const ROKAFSectorKE14Detail = () => {
             <div className={`w-3 h-3 ${
               track.status === 'FRIENDLY' ? 'bg-green-400' : 
               track.status === 'UNKNOWN' ? 'bg-yellow-400' : 'bg-red-400'
-            } ${shapes[track.status]}`}></div>
+            } ${shapes[track.status as keyof typeof shapes]}`}></div>
             <span className="text-[9px] font-bold">{track.callsign}</span>
           </div>
           <div className="text-[8px] mt-1">
@@ -577,11 +577,11 @@ const ROKAFSectorKE14Detail = () => {
             </h3>
             <div className="space-y-2 text-xs">
               {Object.entries(
-                sectorTracks.reduce((acc, track) => {
+                sectorTracks.reduce((acc: any, track: any) => {
                   acc[track.mission] = (acc[track.mission] || 0) + 1;
                   return acc;
                 }, {})
-              ).map(([mission, count]) => (
+              ).map(([mission, count]: [string, any]) => (
                 <div key={mission} className="flex justify-between items-center">
                   <span className="text-blue-600">{mission}</span>
                   <span className="text-blue-300 font-bold">{count}</span>
