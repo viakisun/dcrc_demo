@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState, useEffect, useCallback } from 'react';
 import { 
   Radar, Target, Plane, Activity, Settings, Flame, Zap, Skull, Crosshair, Radio, CloudRain

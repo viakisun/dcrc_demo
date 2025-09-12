@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState, useEffect } from 'react';
 import { 
   Target, Radio,
@@ -43,6 +45,17 @@ interface SectorTrack {
 }
 
 const ROKAFSectorKE14Detail = () => {
+  // Simple test to see if component renders
+  return (
+    <div className="min-h-screen bg-gray-900 text-green-300 font-mono p-8">
+      <h1 className="text-2xl font-bold mb-4">ROKAF Sector KE-14 Operations</h1>
+      <p>This is a test component to verify rendering works.</p>
+      <p>Time: {new Date().toLocaleTimeString()}</p>
+    </div>
+  );
+};
+
+const ROKAFSectorKE14DetailOriginal = () => {
   const [currentTime, setCurrentTime] = useState(new Date());
   const [selectedOperator, setSelectedOperator] = useState('OPS-01');
   const [alertStatus, setAlertStatus] = useState('GREEN');
