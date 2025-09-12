@@ -1,26 +1,28 @@
 'use client';
 
-import React, { Suspense } from 'react';
+import React from 'react';
 import type { SampleSlug } from '@/lib/types';
 
-// Direct imports instead of dynamic imports
-import DataAnalystWorkstation from '@/samples/rokaf-data-analyst-workstation';
+// Import new simplified components
+import MCRCAdvancedV2 from '@/samples/mcrc-advanced-v2';
+import SectorKE14Operations from '@/samples/sector-ke14-operations';
+import RadarControllerWorkstation from '@/samples/radar-controller-workstation';
+import DataAnalystWorkstation from '@/samples/data-analyst-workstation';
+
+// Import other existing components
 import FlightControllerWorkstation from '@/samples/rokaf-flight-controller-workstation';
-import ROKAFMCRCAdvanced from '@/samples/rokaf-mcrc-advanced-v2';
 import ROKAFMCRCAISystem from '@/samples/rokaf-mcrc-ai-system';
 import ROKAFMCRCSystem from '@/samples/rokaf-mcrc-east-asia';
-import RadarControllerWorkstation from '@/samples/rokaf-radar-controller-workstation';
-import ROKAFSectorKE14Detail from '@/samples/rokaf-sector-ke14-operations';
 import CommCoordinatorWorkstation from '@/samples/comm-coordinator-workstation';
 
 const components: Record<SampleSlug, React.ComponentType> = {
   'rokaf-data-analyst-workstation': DataAnalystWorkstation,
   'rokaf-flight-controller-workstation': FlightControllerWorkstation,
-  'rokaf-mcrc-advanced-v2': ROKAFMCRCAdvanced,
+  'rokaf-mcrc-advanced-v2': MCRCAdvancedV2,
   'rokaf-mcrc-ai-system': ROKAFMCRCAISystem,
   'rokaf-mcrc-east-asia': ROKAFMCRCSystem,
   'rokaf-radar-controller-workstation': RadarControllerWorkstation,
-  'rokaf-sector-ke14-operations': ROKAFSectorKE14Detail,
+  'rokaf-sector-ke14-operations': SectorKE14Operations,
   'comm-coordinator-workstation': CommCoordinatorWorkstation,
 };
 
